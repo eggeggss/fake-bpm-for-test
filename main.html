@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BPM 模擬系統 - 主畫面</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="main-bg text-dark">
+  <nav class="navbar navbar-expand-lg navbar-light glass-nav sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <div class="logo-badge me-2 small"><i class="bi bi-lightning-charge-fill"></i></div>
+        <strong>BPM 簽核</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="topNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" data-page="dashboard" href="#"><i class="bi bi-grid me-1"></i> 儀表板</a></li>
+          <li class="nav-item"><a class="nav-link" data-page="inbox" href="#"><i class="bi bi-inbox me-1"></i> 待簽核</a></li>
+          <li class="nav-item"><a class="nav-link" data-page="forms" href="#"><i class="bi bi-ui-checks-grid me-1"></i> 表單中心</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <div id="notif" class="position-relative">
+            <i class="bi bi-bell fs-5"></i>
+            <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle p-1 small" id="notifCnt">0</span>
+          </div>
+          <div class="dropdown">
+            <a class="d-flex align-items-center text-decoration-none link-dark" data-bs-toggle="dropdown" href="#">
+              <img id="avatar" class="rounded-circle me-2 user-avatar" width="36" height="36" alt="avatar">
+              <div class="d-none d-sm-block">
+                <div class="fw-bold" id="userName">使用者</div>
+                <div class="small text-secondary" id="userDept">部門</div>
+              </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li><a class="dropdown-item" id="btnProfile" href="#"><i class="bi bi-person me-2"></i> 個人資料</a></li>
+              <li><a class="dropdown-item" id="btnLogout" href="#"><i class="bi bi-box-arrow-right me-2"></i> 登出</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <!-- 儀表板 -->
+    <div id="page-dashboard" class="page-view">
+      <div class="row g-3">
+        <div class="col-12 col-lg-8">
+          <div class="card glass-card mb-3">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h5 class="mb-0"><i class="bi bi-rocket-takeoff me-2 text-primary"></i> 快速動作</h5>
+                <div class="text-secondary small">常用表單</div>
+              </div>
+              <div class="row g-2" id="quickActions"></div>
+            </div>
+          </div>
+          <div class="card glass-card">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h5 class="mb-0"><i class="bi bi-inbox me-2 text-warning"></i> 我的待簽核</h5>
+                <a class="small link-primary" data-page="inbox" href="#">更多</a>
+              </div>
+              <div id="inboxList" class="list-group list-group-flush"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="card glass-card mb-3">
+            <div class="card-body">
+              <h5 class="mb-3"><i class="bi bi-person-badge me-2 text-success"></i> 使用者資訊</h5>
+              <div id="userInfo"></div>
+            </div>
+          </div>
+          <div class="card glass-card">
+            <div class="card-body">
+              <h5 class="mb-3"><i class="bi bi-stars me-2 text-info"></i> 系統公告</h5>
+              <ul class="list-unstyled mb-0" id="news"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 待簽核 -->
+    <div id="page-inbox" class="page-view d-none">
+      <div class="card glass-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+            <h5 class="mb-0"><i class="bi bi-inbox me-2 text-warning"></i> 待簽核清單</h5>
+            <div class="d-flex align-items-center gap-2">
+              <div class="input-group input-group-sm" style="width: 220px;">
+                <span class="input-group-text bg-transparent text-secondary"><i class="bi bi-search"></i></span>
+                <input class="form-control form-control-sm" id="searchInbox" placeholder="搜尋關鍵字...">
+              </div>
+              <div class="btn-group btn-group-sm" role="group">
+                <button class="btn btn-success" id="btnBatchApprove" disabled><i class="bi bi-check2 me-1"></i> 批次核准</button>
+                <button class="btn btn-danger" id="btnBatchReject" disabled><i class="bi bi-x me-1"></i> 批次退回</button>
+              </div>
+              <div class="input-group input-group-sm" style="width: 220px;">
+                <label class="input-group-text" for="sortField">排序</label>
+                <select class="form-select" id="sortField">
+                  <option value="date">日期</option>
+                  <option value="id">單號</option>
+                  <option value="form">類型</option>
+                  <option value="applicant">申請人</option>
+                  <option value="status">狀態</option>
+                </select>
+                <button class="btn btn-outline-secondary" id="sortDir" title="切換排序方向"><i class="bi bi-sort-down-alt"></i></button>
+              </div>
+              <div class="input-group input-group-sm" style="width: 150px;">
+                <label class="input-group-text" for="pageSize">每頁</label>
+                <select class="form-select" id="pageSize">
+                  <option>10</option>
+                  <option>20</option>
+                  <option>50</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div id="inboxTable" class="table-responsive"></div>
+          <div id="inboxPager" class="d-flex align-items-center justify-content-between mt-2 small text-secondary"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 表單中心 -->
+    <div id="page-forms" class="page-view d-none">
+      <div class="card glass-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h5 class="mb-0"><i class="bi bi-ui-checks-grid me-2 text-primary"></i> 表單中心</h5>
+            <div>
+              <div class="btn-group" role="group">
+                <button class="btn btn-outline-secondary btn-sm filter-btn active" data-filter="all">全部</button>
+                <button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="leave">請假單</button>
+                <button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="trip">出差單</button>
+                <button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="ot">加班單</button>
+                <button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="entry">入廠申請單</button>
+              </div>
+            </div>
+          </div>
+          <div id="formCenter" class="row g-3"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 表單 Modal：通用簡版 -->
+  <div class="modal fade" id="formModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formModalLabel">表單</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="formModalBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">關閉</button>
+          <button type="button" class="btn btn-primary" id="btnSubmitForm"><i class="bi bi-send me-1"></i> 送出申請</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 明細檢視 + 審核 Modal -->
+  <div class="modal fade" id="viewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewModalLabel">單據明細</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="viewDetail"></div>
+          <hr>
+          <h6 class="mb-2">歷程記錄</h6>
+          <ul class="list-group list-group-flush" id="historyList"></ul>
+          <hr>
+          <div>
+            <label class="form-label">審核意見（非必填）</label>
+            <textarea class="form-control" rows="3" id="reviewComment" placeholder="若同意或退回，請輸入意見..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">關閉</button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-danger" id="btnReject"><i class="bi bi-x me-1"></i> 退回</button>
+            <button type="button" class="btn btn-success" id="btnApprove"><i class="bi bi-check2 me-1"></i> 同意</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    // 標記此頁類型給 app.js 做初始化
+    window.__BPM_PAGE__ = 'main';
+  </script>
+</body>
+</html>

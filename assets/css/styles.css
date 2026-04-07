@@ -1,0 +1,65 @@
+/* 主題色與活潑效果 */
+:root{
+  --primary:#6C5CE7;
+  --accent:#00D2D3;
+  --warning:#FDCB6E;
+  --danger:#FF7675;
+  --bg:#ffffff;          /* 改為白底 */
+  --bg2:#f6f8fb;         /* 淺灰底 */
+  --card:#ffffff;        /* 卡片白色 */
+  --glass:#ffffff;
+  --text:#222;           /* 黑字 */
+  --muted:#6c757d;       /* 次文字 */
+  --border:#e5e7eb;      /* 邊框 */
+}
+
+body{background:var(--bg2);color:var(--text);} 
+
+/* 卡片與導覽（亮色） */
+.glass-card{background:var(--card); border:1px solid var(--border); border-radius:14px;}
+.glass-nav{background:#ffffffe6; border-bottom:1px solid var(--border);} 
+
+/* 登入頁背景與動畫（亮色） */
+.login-bg{background: radial-gradient(800px 400px at 10% -20%, rgba(108,92,231,.08), transparent),
+                     radial-gradient(700px 350px at 110% 20%, rgba(0,210,211,.08), transparent),
+                     radial-gradient(600px 300px at 50% 120%, rgba(253,203,110,.08), transparent), var(--bg2);} 
+.floating-shapes span{position:fixed; display:block; width:16px;height:16px; background:var(--accent); opacity:.25; border-radius:50%; animation: float 12s linear infinite; box-shadow:0 0 12px rgba(0,0,0,.05);} 
+@keyframes float{ from{ transform:translateY(100vh);} to{ transform:translateY(-10vh);} }
+
+.logo-badge{ width:44px;height:44px; display:inline-flex; align-items:center; justify-content:center; border-radius:12px; background:linear-gradient(135deg, var(--primary), #a29bfe); color:white; box-shadow:0 6px 16px rgba(108,92,231,.35);} 
+.logo-badge.small{ width:32px;height:32px; border-radius:10px;}
+.user-avatar{object-fit:cover; border:2px solid var(--border);} 
+
+/* 亮面按鈕效果 */
+.btn.shiny{ position:relative; overflow:hidden; }
+.btn.shiny:before{ content:""; position:absolute; top:-50%; left:-30%; width:40%; height:200%; background:linear-gradient(120deg, transparent, rgba(255,255,255,.9), transparent); transform:skewX(-20deg); transition: transform .6s; }
+.btn.shiny:hover:before{ transform: translateX(350%) skewX(-20deg);} 
+
+/* dashboard 元件 */
+.card .list-group-item{ background:transparent; color:var(--text);} 
+.badge-soft{ background: rgba(99,102,241,.08); border:1px solid rgba(99,102,241,.2); color:#4f46e5; } 
+.tag{ display:inline-block; padding:.25rem .5rem; margin-right:.25rem; border-radius:20px; font-size:.75rem; background:#f3f4f6; color:#374151; }
+
+/* 表格（亮色） */
+.table{ color:var(--text);} 
+.table thead th{ border-bottom-color: var(--border);} 
+.table tbody tr{ border-color: var(--border);} 
+.table .status{ padding:.2rem .5rem; border-radius: 12px; font-size:.75rem; text-transform:capitalize;}
+.status.pending{ background: rgba(253,203,110,.25); color:#8b6b13;}
+.status.approved{ background: rgba(85,239,196,.25); color:#0f766e;}
+.status.rejected{ background: rgba(255,118,117,.25); color:#9f1239;}
+
+/* 表單卡片 */
+.form-card{ transition: transform .15s ease, box-shadow .15s ease; background:linear-gradient(180deg, #fff, #fff); border:1px solid var(--border);} 
+.form-card:hover{ transform: translateY(-3px); box-shadow:0 10px 22px rgba(2,6,23,.06);} 
+
+/* 小元件 */
+.kv{ display:flex; align-items:center; justify-content:space-between; padding:.25rem 0; border-bottom:1px dashed var(--border);} 
+.kv:last-child{ border-bottom:none;}
+.kv .k{ color:var(--muted); }
+.kv .v{ font-weight:600;}
+
+/* 通用（亮色） */
+.main-bg{ background: var(--bg2); }
+.navbar .nav-link.active{ color:#111 !important; font-weight:600; }
+.badge{ font-weight:600; }

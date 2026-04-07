@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BPM 模擬系統 - 登入</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="login-bg d-flex align-items-center justify-content-center min-vh-100 text-dark">
+  <!-- 背景裝飾 -->
+  <div class="floating-shapes">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-11 col-sm-9 col-md-7 col-lg-5">
+        <div class="card shadow-lg border-0 glass-card">
+          <div class="card-body p-4 p-md-5">
+            <div class="text-center mb-4">
+              <div class="logo-badge mb-2"><i class="bi bi-lightning-charge-fill"></i></div>
+              <h1 class="h4 mb-1 fw-bold">BPM 模擬簽核系統</h1>
+              <div class="text-secondary small">僅供展示用，無需後端</div>
+            </div>
+
+            <form id="loginForm" autocomplete="off">
+              <div class="mb-3">
+                <label for="account" class="form-label">帳號</label>
+                <input type="text" id="account" class="form-control form-control-lg" placeholder="例如: jack.chen" required>
+              </div>
+              <div class="mb-2">
+                <label for="password" class="form-label">密碼</label>
+                <div class="input-group input-group-lg">
+                  <input type="password" id="password" class="form-control" placeholder="任何密碼皆可" required>
+                  <button class="btn btn-outline-secondary" type="button" id="togglePwd"><i class="bi bi-eye"></i></button>
+                </div>
+              </div>
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="rememberMe" checked>
+                  <label class="form-check-label" for="rememberMe">記住我</label>
+                </div>
+                <span class="small text-secondary">示範帳號: rogerroan / 1234</span>
+              </div>
+
+              <button class="btn btn-primary btn-lg w-100 shiny" type="submit">
+                <i class="bi bi-box-arrow-in-right me-1"></i> 登入系統
+              </button>
+            </form>
+
+            <div class="text-center mt-3 small text-secondary">
+              本系統僅為前端原型，資料儲存於瀏覽器 LocalStorage。
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-3">
+          <button id="quickFill" class="btn btn-outline-secondary btn-sm"><i class="bi bi-magic me-1"></i> 一鍵填入示範</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    // 標記此頁類型給 app.js 做初始化
+    window.__BPM_PAGE__ = 'login';
+  </script>
+</body>
+</html>
