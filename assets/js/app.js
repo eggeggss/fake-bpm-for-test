@@ -280,10 +280,8 @@
       setData(d);
       const fmInst = bootstrap.Modal.getInstance(document.getElementById('formModal'));
       if(fmInst) fmInst.hide();
-      // 重新套用查詢/分頁與通知
-      $('#notifCnt').text((d.inbox||[]).filter(x=>x.status==='pending').length);
-      switchPage('inbox');
-      $('.nav-link[data-page=inbox]').trigger('click');
+      // 刷新頁面
+      location.reload();
     });
   }
 
